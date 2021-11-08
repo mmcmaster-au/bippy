@@ -1,0 +1,130 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">Split a seedphrase</div>
+    <div class="panel-body">
+      <p>
+        This utility will split a BIP39 seed phrase in 2 parts.
+
+        It uses a XOR operation to combine a <a href="https://en.wikipedia.org/wiki/One-time_pad"></a> with the seed,
+        resulting in
+        2 new seed phrases. Having just one part won't provide an attacker any useful information - both are required to
+        regenerate the original seed phrase.
+      </p>
+
+      <p>
+        How is this useful ? Here's a few examples:
+      </p>
+
+      <ul>
+        <li>Store one part at home, store one part at work,</li>
+        <li>Store one part in a password manager, store one part in a safe on paper,</li>
+        <li>Keep one part in your wallet, keep one part at your parent's house. etc.</li>
+      </ul>
+      <p>Better yet, create 3 different split keys and do all 3.</p>
+    </div>
+  </div>
+
+  <div class="panel panel-danger">
+    <div class="panel-heading">Can you trust this page ?</div>
+    <div class="panel-body">
+      Only enter a seed phrase this if you trust the author and web host.
+
+      I strongly recommend running it locally while disconnected from internet.
+    </div>
+  </div>
+  <mat-tab-group>
+    <mat-tab label="Split">
+      <div [formGroup]="xorForm" class="d-flex flex-column mt-3">
+        <div class="p-2">&nbsp;
+        </div>
+        <div class="p-2">
+          <mat-form-field>
+            <mat-label>Original Seed Phrase</mat-label>
+            <input matInput formControlName="seedPhrase">
+
+            <mat-error *ngIf="seedPhrase.errors?.required">
+              Seed phrase is required.
+            </mat-error>
+            <mat-error *ngIf="seedPhrase.errors?.seedLength">
+              The seed phrase must be 12 or 24 words.
+            </mat-error>
+            <mat-error *ngIf="seedPhrase.errors?.seedInvalid">
+              The seed phrase is invalid.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="p-2">
+          <mat-form-field>
+            <mat-label>Split BIP39 key, part 1</mat-label>
+            <input matInput readonly formControlName="xorPhrase1">
+            <button matSuffix [cdkCopyToClipboard]="xorPhrase1.value">
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div class="p-2">
+          <mat-form-field>
+            <mat-label>Split BIP39 key, part 2</mat-label>
+            <input matInput readonly formControlName="xorPhrase2">
+            <button matSuffix [cdkCopyToClipboard]="xorPhrase2.value">
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Join">
+      <div [formGroup]="joinForm" class="d-flex flex-column mt-3">
+        <div class="p-2">&nbsp;
+        </div>
+
+        <div class="p-2">
+          <mat-form-field>
+            <mat-label>Join Seed Phrase part 1</mat-label>
+            <input matInput formControlName="joinPhrase1">
+
+            <mat-error *ngIf="joinPhrase1.errors?.required">
+              Seed phrase is required.
+            </mat-error>
+            <mat-error *ngIf="joinPhrase1.errors?.seedLength">
+              The seed phrase must be 12 or 24 words.
+            </mat-error>
+            <mat-error *ngIf="joinPhrase1.errors?.seedInvalid">
+              The seed phrase is invalid.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="p-2">
+          <mat-form-field>
+            <mat-label>Join Seed Phrase part 2</mat-label>
+            <input matInput formControlName="joinPhrase2">
+
+            <mat-error *ngIf="joinPhrase2.errors?.required">
+              Seed phrase is required.
+            </mat-error>
+            <mat-error *ngIf="joinPhrase2.errors?.seedLength">
+              The seed phrase must be 12 or 24 words.
+            </mat-error>
+            <mat-error *ngIf="joinPhrase2.errors?.seedInvalid">
+              The seed phrase is invalid.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="p-2">
+          <mat-form-field>
+            <mat-label>Reconstructed BIP39 key, part 1</mat-label>
+            <input matInput readonly formControlName="joinedSeed">
+            <button matSuffix [cdkCopyToClipboard]="joinedSeed.value">
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

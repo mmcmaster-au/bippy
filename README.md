@@ -1,5 +1,7 @@
 # Bippy
 
+Try it out [here](https://mmcmaster-au.github.io/bippy/)
+
 This utility will split a BIP39 seed phrase in 2 parts.
 
 It uses a XOR operation to combine a [One-time pad](https://en.wikipedia.org/wiki/One-time_pad) with the seed,

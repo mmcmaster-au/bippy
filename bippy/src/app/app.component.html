@@ -27,7 +27,7 @@
   <div class="panel panel-danger">
     <div class="panel-heading">Can you trust this page ?</div>
     <div class="panel-body">
-      Only enter a seed phrase this if you trust the author and web host.
+      Only enter a seed phrase if you trust the author and web host.
 
       I strongly recommend running it locally while disconnected from internet.
     </div>
@@ -41,6 +41,12 @@
           <mat-form-field>
             <mat-label>Original Seed Phrase</mat-label>
             <input matInput formControlName="seedPhrase">
+
+            <button matSuffix (click)="generate()"><mat-icon>refresh</mat-icon></button>
+
+            <button matSuffix [cdkCopyToClipboard]="seedPhrase.value">
+              <mat-icon>content_copy</mat-icon>
+            </button>
 
             <mat-error *ngIf="seedPhrase.errors?.required">
               Seed phrase is required.

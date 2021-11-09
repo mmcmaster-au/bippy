@@ -108,10 +108,10 @@ export class AppComponent implements OnInit {
               }
 
               entropyToMnemonicAsync(otp)
-                .then(otpPhrase => this.xorForm.get("xorPhrase1")?.setValue(otpPhrase));
+                .then(otpPhrase => this.xorPhrase1?.setValue(otpPhrase));
 
               entropyToMnemonicAsync(xorValues)
-                .then(xorPhrase => this.xorForm.get("xorPhrase2")?.setValue(xorPhrase));
+                .then(xorPhrase => this.xorPhrase2?.setValue(xorPhrase));
             }
           });
 
@@ -160,9 +160,16 @@ export class AppComponent implements OnInit {
             }
 
             entropyToMnemonicAsync(xorValues)
-              .then(xorPhrase => this.joinForm.get("joinedSeed")?.setValue(xorPhrase));
+              .then(xorPhrase => this.joinedSeed?.setValue(xorPhrase));
           }
         });
+  }
+
+  public generate() {
+    let secret = Buffer.alloc(32);
+    window.crypto.getRandomValues(secret);
+    entropyToMnemonicAsync(secret)
+      .then(seed => this.seedPhrase.setValue(seed));
   }
 }
 

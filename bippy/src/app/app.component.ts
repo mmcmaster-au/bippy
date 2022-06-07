@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { AbstractControl, UntypedFormGroup, UntypedFormControl, Validators, ValidationErrors } from '@angular/forms';
 
 import { mnemonicToEntropyAsync, entropyToMnemonicAsync, validateMnemonicAsync } from 'bip39-web';
 
@@ -47,27 +47,27 @@ export async function seedValidValidator(control: AbstractControl): Promise<Vali
 export class AppComponent implements OnInit {
   title = 'bippy';
 
-  xorForm = new FormGroup({
-    seedPhrase: new FormControl('', [Validators.required], [seedLengthValidator, seedValidValidator]),
-    xorPhrase1: new FormControl({ value: '', disabled: true }),
-    xorPhrase2: new FormControl({ value: '', disabled: true }),
+  xorForm = new UntypedFormGroup({
+    seedPhrase: new UntypedFormControl('', [Validators.required], [seedLengthValidator, seedValidValidator]),
+    xorPhrase1: new UntypedFormControl({ value: '', disabled: true }),
+    xorPhrase2: new UntypedFormControl({ value: '', disabled: true }),
   });
 
-  joinForm = new FormGroup({
-    joinPhrase1: new FormControl('', [Validators.required], [seedLengthValidator, seedValidValidator]),
-    joinPhrase2: new FormControl('', [Validators.required], [seedLengthValidator, seedValidValidator]),
-    joinedSeed: new FormControl({ value: '', disabled: true }),
+  joinForm = new UntypedFormGroup({
+    joinPhrase1: new UntypedFormControl('', [Validators.required], [seedLengthValidator, seedValidValidator]),
+    joinPhrase2: new UntypedFormControl('', [Validators.required], [seedLengthValidator, seedValidValidator]),
+    joinedSeed: new UntypedFormControl({ value: '', disabled: true }),
   })
 
 
-  get seedPhrase(): FormControl { return this.xorForm.get("seedPhrase") as FormControl; }
-  get xorPhrase1(): FormControl { return this.xorForm.get("xorPhrase1") as FormControl; }
-  get xorPhrase2(): FormControl { return this.xorForm.get("xorPhrase2") as FormControl; }
+  get seedPhrase(): UntypedFormControl { return this.xorForm.get("seedPhrase") as UntypedFormControl; }
+  get xorPhrase1(): UntypedFormControl { return this.xorForm.get("xorPhrase1") as UntypedFormControl; }
+  get xorPhrase2(): UntypedFormControl { return this.xorForm.get("xorPhrase2") as UntypedFormControl; }
 
 
-  get joinedSeed(): FormControl { return this.joinForm.get("joinedSeed") as FormControl; }
-  get joinPhrase1(): FormControl { return this.joinForm.get("joinPhrase1") as FormControl; }
-  get joinPhrase2(): FormControl { return this.joinForm.get("joinPhrase2") as FormControl; }
+  get joinedSeed(): UntypedFormControl { return this.joinForm.get("joinedSeed") as UntypedFormControl; }
+  get joinPhrase1(): UntypedFormControl { return this.joinForm.get("joinPhrase1") as UntypedFormControl; }
+  get joinPhrase2(): UntypedFormControl { return this.joinForm.get("joinPhrase2") as UntypedFormControl; }
 
 
   ngOnInit() {
